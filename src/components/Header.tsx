@@ -46,7 +46,7 @@ const Header = () => {
           <Button variant="ghost" className="hidden sm:inline-flex" onClick={handleAuthAction}>
             {user ? "Sign Out" : "Sign In"}
           </Button>
-          <Button variant="hero">
+          <Button variant="hero" onClick={() => navigate("/book-service")}>
             Book a service
           </Button>
         </div>
