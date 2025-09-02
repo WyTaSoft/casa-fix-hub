@@ -1,6 +1,19 @@
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const handleAuthAction = () => {
+    if (user) {
+      signOut();
+    } else {
+      navigate("/auth");
+    }
+  };
+
   return (
     <header className="bg-background/95 backdrop-blur-sm border-b sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -25,8 +38,13 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" className="hidden sm:inline-flex">
-            Sign In
+          {user && (
+            <span className="hidden sm:inline-flex text-sm text-muted-foreground">
+              Welcome, {user.user_metadata?.full_name || user.email}
+            </span>
+          )}
+          <Button variant="ghost" className="hidden sm:inline-flex" onClick={handleAuthAction}>
+            {user ? "Sign Out" : "Sign In"}
           </Button>
           <Button variant="hero">
             Book a service
